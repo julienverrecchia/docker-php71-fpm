@@ -1,9 +1,8 @@
 # PHP-FPM 7.1
-# Revision : 2018.01
 FROM php:7.1-fpm-jessie
 
 LABEL maintainer="Julien Verrecchia" \
-        version="2018.01"
+        version="2018.02"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -84,6 +83,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 
 # ionCube Loader
 ADD ./ext/ioncube_loader_lin_7.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20160303/
+ADD ./config/ioncube.ini /usr/local/etc/php/conf.d/00-ioncube.ini
 
 # PHP Configuration
 RUN sed -e '/9000/ s/^;*/;/' -i /usr/local/etc/php-fpm.d/zz-docker.conf
