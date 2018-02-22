@@ -1,9 +1,6 @@
 # PHP-FPM 7.1
 FROM php:7.1-fpm-jessie
 
-LABEL maintainer="Julien Verrecchia" \
-        version="2018.02"
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         apt-utils \
@@ -100,3 +97,7 @@ RUN usermod -u 1000 www-data
 WORKDIR /var/www
 
 CMD ["php-fpm"]
+
+LABEL \
+    maintainer="Julien Verrecchia" \
+    version="2018.02.22"
