@@ -88,6 +88,10 @@ RUN sed -e '/9000/ s/^;*/;/' -i /usr/local/etc/php-fpm.d/www.conf
 ADD ./config/php71.pool.conf /usr/local/etc/php-fpm.d/
 ADD ./config/custom.php.ini /usr/local/etc/php/conf.d
 
+# SSMTP
+ADD ./config/ssmtp.conf /etc/ssmtp/ssmtp.conf 
+ADD ./config/php-ssmtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
+
 # Clean up
 RUN apt-get clean \
     && rm -r /var/lib/apt/lists/*
