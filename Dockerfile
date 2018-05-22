@@ -92,11 +92,21 @@ ADD ./config/custom.php.ini /usr/local/etc/php/conf.d
 ADD ./config/ssmtp.conf /etc/ssmtp/ssmtp.conf 
 ADD ./config/php-ssmtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
 
+RUN apt-get install -y --no-install-recommends wget
+
 # Clean up
 RUN apt-get clean \
     && rm -r /var/lib/apt/lists/*
 
 RUN usermod -u 1000 www-data
+
+RUN EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)"
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN ACTUAL_SIGNATURE="$(php -r "echo hash_file('SHA384', 'composer-setup.php');")"
+RUN if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then >&2 echo 'ERROR: Invalid installer signature' ; rm composer-setup.php ; exit 1; fi;
+RUN php composer-setup.php --quiet
+RUN RESULT=$?
+RUN rm composer-setup.php && mv composer.phar /usr/local/bin/composer
 
 WORKDIR /var/www
 
