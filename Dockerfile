@@ -100,6 +100,7 @@ RUN apt-get clean \
 
 RUN usermod -u 1000 www-data
 
+# Composer
 RUN EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)"
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN ACTUAL_SIGNATURE="$(php -r "echo hash_file('SHA384', 'composer-setup.php');")"
@@ -107,6 +108,11 @@ RUN if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then >&2 echo 'ERROR: I
 RUN php composer-setup.php --quiet
 RUN RESULT=$?
 RUN rm composer-setup.php && mv composer.phar /usr/local/bin/composer
+
+# PHPUnit
+RUN wget https://phar.phpunit.de/phpunit-6.5.phar \
+    && chmod +x phpunit-6.5.phar \
+    && mv phpunit-6.5.phar /usr/local/bin/phpunit
 
 WORKDIR /var/www
 
