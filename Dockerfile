@@ -93,7 +93,8 @@ ADD ./config/ssmtp.conf /etc/ssmtp/ssmtp.conf
 ADD ./config/php-ssmtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
 
 RUN apt-get install -y --no-install-recommends wget
-RUN docker-php-ext-configure sockets
+RUN docker-php-ext-configure sockets \
+    && docker-php-ext-install sockets
 
 # Composer
 RUN EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)"
