@@ -93,12 +93,7 @@ ADD ./config/ssmtp.conf /etc/ssmtp/ssmtp.conf
 ADD ./config/php-ssmtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
 
 RUN apt-get install -y --no-install-recommends wget
-
-# Clean up
-RUN apt-get clean \
-    && rm -r /var/lib/apt/lists/*
-
-RUN usermod -u 1000 www-data
+RUN docker-php-ext-configure sockets
 
 # Composer
 RUN EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)"
@@ -113,6 +108,12 @@ RUN rm composer-setup.php && mv composer.phar /usr/local/bin/composer
 RUN wget https://phar.phpunit.de/phpunit-6.5.phar \
     && chmod +x phpunit-6.5.phar \
     && mv phpunit-6.5.phar /usr/local/bin/phpunit
+
+# Clean up
+RUN apt-get clean \
+    && rm -r /var/lib/apt/lists/*
+
+RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
 
