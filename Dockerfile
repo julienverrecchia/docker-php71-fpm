@@ -26,7 +26,7 @@ RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
-    && docker-php-ext-install mbstring mcrypt pdo_pgsql intl xmlrpc \
+    && docker-php-ext-install mbstring mcrypt pcntl pdo_pgsql intl xmlrpc \
     && docker-php-ext-install opcache \
     && docker-php-ext-install zip
 
