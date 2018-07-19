@@ -104,4 +104,4 @@ CMD ["php-fpm"]
 
 LABEL \
     maintainer="Julien Verrecchia" \
-    version="2018.02.22"
+    version="2018.07.18"
