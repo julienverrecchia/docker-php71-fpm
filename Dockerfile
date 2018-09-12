@@ -89,7 +89,7 @@ ADD ./config/php71.pool.conf /usr/local/etc/php-fpm.d/
 ADD ./config/custom.php.ini /usr/local/etc/php/conf.d
 
 # SSMTP
-ADD ./config/ssmtp.conf /etc/ssmtp/ssmtp.conf 
+ADD ./config/ssmtp.conf /etc/ssmtp/ssmtp.conf
 ADD ./config/php-ssmtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
 
 RUN apt-get install -y --no-install-recommends wget
@@ -109,6 +109,11 @@ RUN rm composer-setup.php && mv composer.phar /usr/local/bin/composer
 RUN wget https://phar.phpunit.de/phpunit-6.5.phar \
     && chmod +x phpunit-6.5.phar \
     && mv phpunit-6.5.phar /usr/local/bin/phpunit
+
+# PHP CS FIXER
+RUN wget https://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer \
+    && chmod a+x php-cs-fixer \
+    && mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
 # Clean up
 RUN apt-get clean \
