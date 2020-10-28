@@ -96,7 +96,9 @@ ADD ./config/php-ssmtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
 RUN apt-get clean \
     && rm -r /var/lib/apt/lists/*
 
-RUN usermod -u 1000 www-data
+RUN usermod -u 1000 www-data \
+    && mkdir -p /var/log/php \
+    && chown -R www-data /var/log/php
 
 WORKDIR /var/www
 
