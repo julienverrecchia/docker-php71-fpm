@@ -85,6 +85,7 @@ ADD ./config/ioncube.ini /usr/local/etc/php/conf.d/00-ioncube.ini
 # PHP Configuration
 RUN sed -e '/9000/ s/^;*/;/' -i /usr/local/etc/php-fpm.d/zz-docker.conf
 RUN sed -e '/9000/ s/^;*/;/' -i /usr/local/etc/php-fpm.d/www.conf
+ADD ./config/php-fpm.conf /usr/local/etc/php-fpm.conf
 ADD ./config/php71.pool.conf /usr/local/etc/php-fpm.d/
 ADD ./config/custom.php.ini /usr/local/etc/php/conf.d
 
